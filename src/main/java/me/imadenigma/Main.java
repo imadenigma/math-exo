@@ -1,6 +1,7 @@
+package me.imadenigma;
 
 public class Main {
   public static void main(String[] args) {
-    //Main
+    new Window();
   }
 }
