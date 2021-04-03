@@ -7,6 +7,7 @@ import javax.swing.JPanel
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
+import kotlin.math.sqrt
 
 @Suppress("SENSELESS_COMPARISON")
 class Panel: JPanel(), MouseListener {
@@ -52,13 +53,31 @@ class Panel: JPanel(), MouseListener {
     override fun mousePressed(p0: MouseEvent?) {
         if (p0 == null) return
         if (p0.xOnScreen == null) return
-        val x = p0.xOnScreen.minus(300)
-        val y = p0.yOnScreen.minus(300)
-        rad = atan2(abs(y).toDouble(), abs(x).toDouble())
-        degrees = Math.toDegrees(rad)
-        radPi = rad * PI
+
+        degrees = calcRotationAngleInDegrees(Point(300,300),p0.point)
+        rad = Math.toRadians(degrees)
+        radPi = degrees / 180
         this.repaint(10)
+
     }
+
+    private fun calcRotationAngleInDegrees(centerPt: Point, targetPt: Point): Double {
+
+        var theta = atan2(
+            (targetPt.x - centerPt.x).toDouble(),
+            (targetPt.y - centerPt.y).toDouble()
+        )
+
+        theta -= Math.PI / 2.0
+
+        var angle = Math.toDegrees(theta)
+
+        if (angle < 0) {
+            angle += 360.0
+        }
+        return angle
+    }
+
 
     override fun mouseReleased(p0: MouseEvent?) {
 
@@ -68,10 +87,5 @@ class Panel: JPanel(), MouseListener {
     }
 
     override fun mouseExited(p0: MouseEvent?) {
-        TODO("Not yet implemented")
-    }
-
-    fun reload(g: Graphics) {
-
     }
 }
