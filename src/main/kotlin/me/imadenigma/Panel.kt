@@ -4,10 +4,7 @@ import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JPanel
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.atan2
-import kotlin.math.sqrt
+import kotlin.math.*
 
 @Suppress("SENSELESS_COMPARISON")
 class Panel: JPanel(), MouseListener {
@@ -21,9 +18,12 @@ class Panel: JPanel(), MouseListener {
 
     init {
         this.addMouseListener(this)
+
+
+
     }
-
-
+    private var lineX = 450
+    private var lineY = 300
 
     override fun paint(g: Graphics) {
         val circle = Circle(150,150,300)
@@ -31,7 +31,7 @@ class Panel: JPanel(), MouseListener {
         g.fillOval(circle.x, circle.y, circle.diameter, circle.diameter)
         g.color = Color.BLACK
         g.drawOval(circle.x, circle.y, circle.diameter, circle.diameter)
-        g.drawLine(300,300,450,300)
+        g.drawLine(300,300, lineX, lineY)
 
         g.color = Color.white
         g.fillRect(0,0,600,100)
@@ -54,29 +54,22 @@ class Panel: JPanel(), MouseListener {
         if (p0 == null) return
         if (p0.xOnScreen == null) return
 
-        degrees = calcRotationAngleInDegrees(Point(300,300),p0.point)
+        degrees = MathUtil.pointsToDeg(Point(300,300),p0.point)
         rad = Math.toRadians(degrees)
         radPi = degrees / 180
+
+        val coor = MathUtil.angleToCoor(rad,150.0)
+        this.lineX = Math.negateExact(coor[0].toInt())
+        this.lineY =  Math.negateExact(coor[1].toInt())
+        if (p0.xOnScreen > 0) this.lineX = abs(coor[0].toInt())
+        if (p0.yOnScreen > 0) this.lineY = abs(coor[1].toInt())
+        println(p0.point)
+        println(coor.asList())
         this.repaint(10)
 
+
     }
 
-    private fun calcRotationAngleInDegrees(centerPt: Point, targetPt: Point): Double {
-
-        var theta = atan2(
-            (targetPt.x - centerPt.x).toDouble(),
-            (targetPt.y - centerPt.y).toDouble()
-        )
-
-        theta -= Math.PI / 2.0
-
-        var angle = Math.toDegrees(theta)
-
-        if (angle < 0) {
-            angle += 360.0
-        }
-        return angle
-    }
 
 
     override fun mouseReleased(p0: MouseEvent?) {
