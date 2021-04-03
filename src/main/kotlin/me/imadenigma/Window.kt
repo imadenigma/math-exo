@@ -17,7 +17,7 @@ class Window {
         val icon = ImageIcon(File("/home/imad/IdeaProjects/Math-exo/src/main/resources/","logo.png").absolutePath)
         frame.iconImage = icon.image
         frame.contentPane.background = Color.WHITE
-
+        frame.add(Panel())
         frame.isVisible = true
     }
 
