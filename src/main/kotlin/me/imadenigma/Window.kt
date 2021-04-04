@@ -1,7 +1,6 @@
 package me.imadenigma
 
 import java.awt.*
-import java.io.File
 import javax.swing.ImageIcon
 import javax.swing.JFrame
 
@@ -14,7 +13,7 @@ class Window {
         frame.size = Dimension(600,600)
         frame.isResizable = false
         //Setting up the icon
-        val icon = ImageIcon(File("/home/imad/IdeaProjects/Math-exo/src/main/resources/","logo.png").absolutePath)
+        val icon = ImageIcon("/home/imad/IdeaProjects/Math-exo/src/main/resources/logo.png")
         frame.iconImage = icon.image
         frame.background = Color.WHITE
 
