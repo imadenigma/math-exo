@@ -6,6 +6,7 @@ import java.awt.Graphics
 import java.awt.Point
 import java.awt.event.MouseEvent
 import java.awt.event.MouseMotionListener
+import java.text.DecimalFormat
 import javax.swing.JPanel
 import kotlin.math.floor
 
@@ -29,7 +30,9 @@ class Panel : JPanel(), MouseMotionListener {
         g.fillOval(circle.x, circle.y, circle.diameter, circle.diameter)
         g.color = Color.BLACK
         g.drawOval(circle.x, circle.y, circle.diameter, circle.diameter)
-        g.drawLine(300, 300, lineX, lineY)
+        g.font = Font("BOLD", 20, 20)
+        g.drawString("Y",circle.diameter - 5,circle.y - 3)
+        g.drawString("X",circle.x + 310,circle.diameter + 5)
 
         g.color = Color.white
         g.fillRect(0, 0, 600, 100)
@@ -41,14 +44,23 @@ class Panel : JPanel(), MouseMotionListener {
         g.drawLine(300, 150, 300, 450)
 
 
-
-
-
         g.color = Color.BLUE
-        g.font = Font("Serif", 16, 16)
-        g.drawString("Radians(Pi): $radPi", 10, 25)
-        g.drawString("Radians: $rad", 10, 50)
-        g.drawString("Degrees: $degrees", 10, 75)
+        g.font = Font("Serif", 20, 20)
+        val formatter = DecimalFormat("#0.00")
+        g.drawString("Radians(Pi): ${formatter.format(radPi)}", 10, 25)
+        g.drawString("Radians: ${formatter.format(rad)}", 10, 50)
+        g.drawString("Degrees: ${formatter.format(degrees)}", 10, 75)
+
+
+        if (degrees >= 180) {
+            g.drawString("Radians(Pi): -${formatter.format(radPi)}", 400, 25)
+            g.drawString("Radians: -${formatter.format(rad)}", 400, 50)
+        }
+
+
+        g.color = Color.BLACK
+        g.drawLine(300, 300, lineX, lineY)
+
     }
 
 
