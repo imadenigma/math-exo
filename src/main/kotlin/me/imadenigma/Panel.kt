@@ -78,10 +78,6 @@ class Panel : JPanel(), MouseMotionListener {
         this.lineY = Math.negateExact(coor[1].toInt())
         if (p0.xOnScreen > 0) this.lineX = floor(coor[0]).toInt()
         if (p0.yOnScreen > 0) this.lineY = floor(coor[1]).toInt()
-
-
-        println(p0.point)
-        println(coor.asList())
         this.repaint(10)
     }
 
